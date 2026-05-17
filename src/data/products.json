@@ -1,0 +1,138 @@
+[
+  {
+    "id": "prod1",
+    "title": "Sérum Vitamina C Iluminador",
+    "description": "Sérum de alta concentración con vitamina C estabilizada al 15%. Ilumina el tono de piel, reduce manchas y aporta un acabado luminoso y uniforme. Ideal para uso diario, mañana y noche. Fórmula no comedogénica, apta para todo tipo de piel incluyendo pieles sensibles.",
+    "price": 89,
+    "discountPrice": 59,
+    "categoryId": "cat1",
+    "images": [
+      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&q=80",
+      "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&q=80"
+    ],
+    "isActive": true,
+    "isFeatured": true,
+    "stock": 50,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "prod2",
+    "title": "Set Cepillos de Maquillaje Profesional",
+    "description": "Set de 12 cepillos de maquillaje con cerdas sintéticas de alta densidad. Incluye brochas para base, contorno, iluminador, sombras y más. Mangos ergonómicos de madera. Bolso de transporte incluido.",
+    "price": 129,
+    "discountPrice": 79,
+    "categoryId": "cat1",
+    "images": [
+      "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80",
+      "https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=600&q=80"
+    ],
+    "isActive": true,
+    "isFeatured": true,
+    "stock": 30,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "prod3",
+    "title": "Organizador de Cocina Giratorio",
+    "description": "Organizador giratorio 360° con dos niveles para especias, aceites y condimentos. Fabricado en plástico resistente de alta calidad. Base antideslizante. Capacidad para 24 frascos. Fácil de limpiar y de uso práctico diario.",
+    "price": 69,
+    "discountPrice": 45,
+    "categoryId": "cat2",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80",
+      "https://images.unsplash.com/photo-1565183928294-7063f23ce0f8?w=600&q=80"
+    ],
+    "isActive": true,
+    "isFeatured": true,
+    "stock": 45,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "prod4",
+    "title": "Bolso de Cuero Sintético Elegante",
+    "description": "Bolso de mano en cuero sintético premium con cierre magnético y forro interior de tela. Incluye correa larga ajustable. Compartimentos interiores organizados. Disponible en negro, camel y burdeos. Medidas: 30cm x 20cm x 10cm.",
+    "price": 149,
+    "discountPrice": 99,
+    "categoryId": "cat3",
+    "images": [
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80",
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80"
+    ],
+    "isActive": true,
+    "isFeatured": true,
+    "stock": 20,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "prod5",
+    "title": "Masajeador Facial Antienvejecimiento",
+    "description": "Masajeador facial eléctrico con tecnología de microcorriente y vibración. Estimula la producción de colágeno, reduce líneas de expresión y mejora la elasticidad de la piel. Incluye cable USB de carga. Batería de larga duración.",
+    "price": 199,
+    "discountPrice": 129,
+    "categoryId": "cat4",
+    "images": [
+      "https://images.unsplash.com/photo-1570554886111-e80fcca6a029?w=600&q=80",
+      "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80"
+    ],
+    "isActive": true,
+    "isFeatured": true,
+    "stock": 35,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "prod6",
+    "title": "Audífonos Inalámbricos con Cancelación de Ruido",
+    "description": "Audífonos Bluetooth 5.3 con cancelación activa de ruido (ANC). Hasta 30 horas de batería con estuche de carga. Plegables y compactos para viaje. Compatible con iOS y Android. Calidad de sonido Hi-Fi con graves potentes.",
+    "price": 299,
+    "discountPrice": 189,
+    "categoryId": "cat5",
+    "images": [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",
+      "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=600&q=80"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "stock": 25,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "prod7",
+    "title": "Crema Hidratante con Ácido Hialurónico",
+    "description": "Crema facial intensamente hidratante con ácido hialurónico triple peso molecular. Restaura la barrera cutánea, aporta firmeza y reduce la deshidratación. Textura ligera, absorción inmediata. Sin parabenos ni fragancias artificiales.",
+    "price": 79,
+    "discountPrice": 55,
+    "categoryId": "cat1",
+    "images": [
+      "https://images.unsplash.com/photo-1612817288484-6f916006741a?w=600&q=80",
+      "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=600&q=80"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "stock": 60,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "prod8",
+    "title": "Juego de Cuchillos de Cocina Profesional",
+    "description": "Set de 5 cuchillos de acero inoxidable alemán con mango ergonómico antideslizante. Incluye cuchillo chef 20cm, pan 20cm, deshuesador 15cm, pelador 9cm y cuchillo para verduras 14cm. Filo de larga duración.",
+    "price": 189,
+    "discountPrice": null,
+    "categoryId": "cat2",
+    "images": [
+      "https://images.unsplash.com/photo-1593618998160-e34014e67546?w=600&q=80",
+      "https://images.unsplash.com/photo-1566454544259-f4b37690ee22?w=600&q=80"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "stock": 15,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  }
+]

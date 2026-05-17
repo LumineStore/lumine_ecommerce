@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  title         String
+  description   String
+  additionalInfo String?
+  price         Float
+  discountPrice Float?
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  images        String   // Almacenado como JSON string en SQLite
+  isActive      Boolean  @default(true)
+  isFeatured    Boolean  @default(false)
+  stock         Int?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Order {
+  id                   String         @id @default(cuid())
+  customerName         String
+  customerLastName     String
+  phone                String
+  email                String?
+  department           String
+  province             String
+  district             String
+  address              String
+  addressReference     String
+  addressExtra         String?
+  notes                String?
+  products             OrderProduct[]
+  total                Float
+  status               String         @default("No pedido")
+  confirmAddress       Boolean        @default(true)
+  confirmProducts      Boolean        @default(true)
+  internalObservations String?
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+}
+
+model OrderProduct {
+  id            String  @id @default(cuid())
+  orderId       String
+  order         Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId     String
+  title         String
+  category      String
+  price         Float
+  discountPrice Float?
+  quantity      Int
+  subtotal      Float
+  image         String
+}

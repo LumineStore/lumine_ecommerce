@@ -1,0 +1,374 @@
+'use client';
+import React, { useEffect, useState, useRef } from 'react';
+import { Product, Category } from '@/types';
+import styles from '../admin.module.css';
+
+export default function AdminProductosPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+
+  // Form state
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [additionalInfo, setAdditionalInfo] = useState('');
+  const [price, setPrice] = useState(0);
+  const [discountPrice, setDiscountPrice] = useState<number | ''>('');
+  const [categoryId, setCategoryId] = useState('');
+  const [images, setImages] = useState<string[]>([]);
+  const [isActive, setIsActive] = useState(true);
+  const [isFeatured, setIsFeatured] = useState(false);
+
+  // Image Upload state
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [tempUrl, setTempUrl] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/admin/productos').then((r) => r.json()),
+      fetch('/api/admin/categorias').then((r) => r.json())
+    ]).then(([prodData, catData]) => {
+      setProducts(prodData);
+      setCategories(catData);
+      setLoading(false);
+    });
+  }, []);
+
+  function resetForm() {
+    setTitle('');
+    setDescription('');
+    setAdditionalInfo('');
+    setPrice(0);
+    setDiscountPrice('');
+    setCategoryId('');
+    setImages([]);
+    setTempUrl('');
+    setIsActive(true);
+    setIsFeatured(false);
+    setEditingId(null);
+  }
+
+  function handleOpenModal(product?: Product) {
+    if (product) {
+      setEditingId(product.id);
+      setTitle(product.title);
+      setDescription(product.description);
+      setAdditionalInfo(product.additionalInfo || '');
+      setPrice(product.price);
+      setDiscountPrice(product.discountPrice ?? '');
+      setCategoryId(product.categoryId);
+      setImages(product.images || []);
+      setIsActive(product.isActive);
+      setIsFeatured(product.isFeatured || false);
+    } else {
+      resetForm();
+    }
+    setModalOpen(true);
+  }
+
+  // --- IMAGE HANDLING ---
+  function handleAddImageUrl() {
+    if (!tempUrl.trim()) return;
+    if (images.length >= 6) {
+      alert('Máximo 6 imágenes permitidas por producto.');
+      return;
+    }
+    setImages([...images, tempUrl.trim()]);
+    setTempUrl('');
+  }
+
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (images.length >= 6) {
+      alert('Máximo 6 imágenes permitidas por producto.');
+      return;
+    }
+
+    setUploadingImage(true);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success && data.url) {
+        setImages([...images, data.url]);
+      } else {
+        alert('Error al subir imagen: ' + (data.error || 'Desconocido'));
+      }
+    } catch (err) {
+      alert('Error de conexión al subir la imagen');
+    } finally {
+      setUploadingImage(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  }
+
+  function handleRemoveImage(index: number) {
+    setImages(images.filter((_, i) => i !== index));
+  }
+
+  // --- SAVE ---
+  async function handleSave(e: React.FormEvent) {
+    e.preventDefault();
+    if (images.length === 0) {
+      alert('Debes agregar al menos 1 imagen.');
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const payload = {
+        ...(editingId && { id: editingId }),
+        title,
+        description,
+        additionalInfo,
+        price: Number(price),
+        discountPrice: discountPrice ? Number(discountPrice) : undefined,
+        categoryId,
+        images,
+        isActive,
+        isFeatured,
+      };
+
+      const method = editingId ? 'PUT' : 'POST';
+      const res = await fetch('/api/admin/productos', {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        const savedProduct = await res.json();
+        if (editingId) {
+          setProducts(products.map((p) => p.id === savedProduct.id ? savedProduct : p));
+        } else {
+          setProducts([savedProduct, ...products]);
+        }
+        setModalOpen(false);
+      } else {
+        alert('Error al guardar el producto');
+      }
+    } catch (error) {
+      alert('Error de conexión');
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleDelete(id: string) {
+    if (!confirm('¿Seguro que deseas eliminar este producto?')) return;
+    const res = await fetch('/api/admin/productos', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+    if (res.ok) {
+      setProducts(products.filter((p) => p.id !== id));
+    }
+  }
+
+  if (loading) return <div className={styles.adminPage}><p>Cargando productos...</p></div>;
+
+  return (
+    <div className={styles.adminPage}>
+      <div className={styles.adminPageHeader}>
+        <h1 className={styles.adminPageTitle}>Productos</h1>
+        <button className="btn btn-primary" onClick={() => handleOpenModal()}>
+          + Nuevo Producto
+        </button>
+      </div>
+
+      <div className={styles.adminCard}>
+        <div style={{ overflowX: 'auto' }}>
+          <table className={styles.adminTable}>
+            <thead>
+              <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Estado</th>
+                <th>Destacado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product) => {
+                const cat = categories.find((c) => c.id === product.categoryId);
+                return (
+                  <tr key={product.id}>
+                    <td>
+                      {product.images?.[0] ? (
+                        <img src={product.images[0]} alt="" style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 4 }} />
+                      ) : (
+                        <div style={{ width: 40, height: 40, background: '#eee', borderRadius: 4 }} />
+                      )}
+                    </td>
+                    <td style={{ fontWeight: 500 }}>{product.title}</td>
+                    <td>
+                      S/ {product.discountPrice ?? product.price}
+                      {product.discountPrice && <span style={{ textDecoration: 'line-through', color: 'var(--text-light)', fontSize: '0.8em', display: 'block' }}>S/ {product.price}</span>}
+                    </td>
+                    <td>{cat?.name || '—'}</td>
+                    <td>
+                      <span className={`badge ${product.isActive ? 'badge-success' : 'badge-error'}`}>
+                        {product.isActive ? 'Activo' : 'Inactivo'}
+                      </span>
+                    </td>
+                    <td>{product.isFeatured ? '⭐ Sí' : 'No'}</td>
+                    <td>
+                      <div className={styles.actions}>
+                        <button className="btn btn-outline" style={{ padding: '4px 8px', fontSize: '0.8rem' }} onClick={() => handleOpenModal(product)}>Editar</button>
+                        <button className="btn btn-outline" style={{ padding: '4px 8px', fontSize: '0.8rem', color: 'var(--error)', borderColor: 'var(--error)' }} onClick={() => handleDelete(product.id)}>Eliminar</button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {modalOpen && (
+        <div className={styles.adminModal}>
+          <div className={styles.adminModalBox}>
+            <h2 className={styles.adminModalTitle}>{editingId ? 'Editar Producto' : 'Nuevo Producto'}</h2>
+            <form onSubmit={handleSave} className={styles.adminFormGrid}>
+              
+              <div className="form-group">
+                <label className="form-label required">Título</label>
+                <input className="form-input" required value={title} onChange={(e) => setTitle(e.target.value)} />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label required">Descripción Corta</label>
+                <textarea className="form-input" required rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Información Adicional (Detallada)</label>
+                <textarea className="form-input" rows={6} value={additionalInfo} onChange={(e) => setAdditionalInfo(e.target.value)} placeholder="Beneficios, Ingredientes, etc." />
+              </div>
+
+              <div className={styles.adminFormRow}>
+                <div className="form-group">
+                  <label className="form-label required">Precio (S/)</label>
+                  <input type="number" step="0.01" className="form-input" required value={price} onChange={(e) => setPrice(Number(e.target.value))} />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Precio Oferta (S/ - Opcional)</label>
+                  <input type="number" step="0.01" className="form-input" value={discountPrice} onChange={(e) => setDiscountPrice(e.target.value)} />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label required">Categoría</label>
+                <select className="form-input" required value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
+                  <option value="">Selecciona...</option>
+                  {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                </select>
+              </div>
+
+              {/* GESTIÓN DE IMÁGENES */}
+              <div className="form-group">
+                <label className="form-label required">
+                  Imágenes ({images.length}/6 permitidas)
+                </label>
+                
+                {/* 1. Subir desde PC */}
+                <div style={{ marginBottom: 12, padding: 12, background: 'var(--cream-light)', borderRadius: 8, border: '1px dashed var(--purple-light)' }}>
+                  <p style={{ fontSize: '0.85rem', marginBottom: 8, fontWeight: 600 }}>1. Subir desde tu computadora:</p>
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={handleFileUpload}
+                    ref={fileInputRef}
+                    disabled={uploadingImage || images.length >= 6}
+                    style={{ fontSize: '0.85rem' }}
+                  />
+                  {uploadingImage && <span style={{ fontSize: '0.8rem', color: 'var(--purple)', marginLeft: 10 }}>Subiendo...</span>}
+                </div>
+
+                {/* 2. Añadir por URL */}
+                <div style={{ marginBottom: 16, padding: 12, background: 'var(--cream-light)', borderRadius: 8, border: '1px solid var(--cream-dark)' }}>
+                  <p style={{ fontSize: '0.85rem', marginBottom: 8, fontWeight: 600 }}>2. O añadir desde un enlace (URL):</p>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <input 
+                      type="url" 
+                      className="form-input" 
+                      placeholder="https://..." 
+                      value={tempUrl}
+                      onChange={(e) => setTempUrl(e.target.value)}
+                      disabled={images.length >= 6}
+                    />
+                    <button 
+                      type="button" 
+                      className="btn btn-outline" 
+                      onClick={handleAddImageUrl}
+                      disabled={!tempUrl || images.length >= 6}
+                    >
+                      Añadir
+                    </button>
+                  </div>
+                </div>
+
+                {/* Galería de imágenes seleccionadas */}
+                {images.length > 0 && (
+                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 10 }}>
+                    {images.map((url, idx) => (
+                      <div key={idx} style={{ position: 'relative', width: 70, height: 70, borderRadius: 6, border: '1px solid var(--cream-dark)', overflow: 'hidden' }}>
+                        <img src={url} alt={`Preview ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveImage(idx)}
+                          style={{
+                            position: 'absolute', top: 2, right: 2,
+                            background: 'rgba(255,0,0,0.8)', color: 'white',
+                            border: 'none', borderRadius: '50%',
+                            width: 20, height: 20, fontSize: '0.7rem',
+                            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                          }}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.adminFormRow}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+                  <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} style={{ width: 18, height: 18 }} />
+                  <span>Producto Activo</span>
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+                  <input type="checkbox" checked={isFeatured} onChange={(e) => setIsFeatured(e.target.checked)} style={{ width: 18, height: 18 }} />
+                  <span>Destacar en Inicio</span>
+                </label>
+              </div>
+
+              <div className={styles.adminModalActions}>
+                <button type="button" className="btn btn-outline" onClick={() => setModalOpen(false)} disabled={saving}>Cancelar</button>
+                <button type="submit" className="btn btn-primary" disabled={saving || images.length === 0}>
+                  {saving ? 'Guardando...' : 'Guardar Producto'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

@@ -1,0 +1,491 @@
+/* =============================================
+   VARIABLES DE COLOR - PALETA LUMINÉ
+   ============================================= */
+:root {
+  --gold: #B89346;
+  --gold-light: #D4AF6B;
+  --gold-dark: #8A6E30;
+  --purple-dark: #4D2C73;
+  --purple-mid: #5E3A8A;
+  --lavender: #7E539E;
+  --lavender-light: #A07DC0;
+  --sage: #A3B19A;
+  --sage-light: #C4D0BD;
+  --cream: #F7F7F2;
+  --cream-dark: #EDEDEA;
+  --white: #FFFFFF;
+  --text-dark: #1A1A2E;
+  --text-mid: #4A4A6A;
+  --text-light: #8888AA;
+  --error: #C0392B;
+  --success: #27AE60;
+  --warning: #F39C12;
+  --shadow-sm: 0 2px 8px rgba(77, 44, 115, 0.04);
+  --shadow-md: 0 8px 24px rgba(77, 44, 115, 0.08);
+  --shadow-lg: 0 16px 40px rgba(77, 44, 115, 0.12);
+  --shadow-xl: 0 24px 56px rgba(77, 44, 115, 0.16);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  --header-height: 72px;
+}
+
+/* =============================================
+   RESET Y BASE
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--cream);
+  color: var(--text-dark);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+h1 { font-family: var(--font-playfair), serif; font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-family: var(--font-playfair), serif; font-size: clamp(1.5rem, 3vw, 2.2rem); }
+h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+
+p { color: var(--text-mid); }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  outline: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+/* =============================================
+   UTILIDADES
+   ============================================= */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 80px 0;
+}
+
+.section-sm {
+  padding: 48px 0;
+}
+
+.text-center { text-align: center; }
+.text-gold { color: var(--gold); }
+.text-purple { color: var(--purple-dark); }
+.text-lavender { color: var(--lavender); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); border: 0;
+}
+
+/* =============================================
+   BOTONES
+   ============================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(184, 147, 70, 0.3);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  box-shadow: 0 6px 20px rgba(184, 147, 70, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--text-dark);
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(26, 26, 46, 0.15);
+}
+.btn-secondary:hover {
+  background: var(--purple-dark);
+  box-shadow: 0 8px 24px rgba(77, 44, 115, 0.25);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--purple-dark);
+  color: var(--purple-dark);
+}
+.btn-outline:hover {
+  background: var(--purple-dark);
+  color: var(--white);
+}
+
+.btn-ghost {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: var(--white);
+  backdrop-filter: blur(8px);
+}
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.btn-danger {
+  background: var(--error);
+  color: var(--white);
+}
+.btn-danger:hover { background: #a93226; }
+
+.btn-sm {
+  padding: 8px 18px;
+  font-size: 0.875rem;
+}
+
+.btn-lg {
+  padding: 16px 36px;
+  font-size: 1.05rem;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* =============================================
+   CARDS
+   ============================================= */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: var(--transition);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-6px);
+  border-color: rgba(184, 147, 70, 0.15);
+}
+
+/* =============================================
+   FORMULARIOS
+   ============================================= */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.form-label.required::after {
+  content: ' *';
+  color: var(--error);
+}
+
+.form-input {
+  padding: 12px 16px;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--text-dark);
+  transition: var(--transition);
+  width: 100%;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--lavender);
+  box-shadow: 0 0 0 3px rgba(126, 83, 158, 0.12);
+}
+
+.form-input.error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1);
+}
+
+.form-error {
+  font-size: 0.8rem;
+  color: var(--error);
+  font-weight: 500;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .form-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* =============================================
+   BADGES / PILLS
+   ============================================= */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge-gold {
+  background: rgba(184, 147, 70, 0.15);
+  color: var(--gold-dark);
+}
+
+.badge-purple {
+  background: rgba(77, 44, 115, 0.12);
+  color: var(--purple-dark);
+}
+
+.badge-lavender {
+  background: rgba(126, 83, 158, 0.12);
+  color: var(--lavender);
+}
+
+.badge-sage {
+  background: rgba(163, 177, 154, 0.2);
+  color: #5A7052;
+}
+
+.badge-success {
+  background: rgba(39, 174, 96, 0.12);
+  color: var(--success);
+}
+
+.badge-error {
+  background: rgba(192, 57, 43, 0.12);
+  color: var(--error);
+}
+
+.badge-warning {
+  background: rgba(243, 156, 18, 0.15);
+  color: #C0810A;
+}
+
+/* =============================================
+   DIVIDER
+   ============================================= */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cream-dark), transparent);
+  margin: 32px 0;
+}
+
+/* =============================================
+   LOADING SPINNER
+   ============================================= */
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(255,255,255,0.3);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* =============================================
+   ANIMACIONES
+   ============================================= */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+.animate-fadeInUp { animation: fadeInUp 0.5s ease forwards; }
+.animate-fadeIn { animation: fadeIn 0.4s ease forwards; }
+
+/* =============================================
+   OVERLAY
+   ============================================= */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  animation: fadeIn 0.2s ease;
+}
+
+/* =============================================
+   SCROLLBAR
+   ============================================= */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb {
+  background: var(--lavender);
+  border-radius: 3px;
+}
+
+/* =============================================
+   TAGS DE DESCUENTO
+   ============================================= */
+.discount-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--error);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.02em;
+}
+
+.featured-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--gold);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
+/* =============================================
+   PRICE
+   ============================================= */
+.price-original {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-decoration: line-through;
+}
+
+.price-discount {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--purple-dark);
+}
+
+.price-normal {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--purple-dark);
+}
+
+/* =============================================
+   TRUST BADGES
+   ============================================= */
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border-left: 3px solid var(--gold);
+}
+
+.trust-badge span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* =============================================
+   RESPONSIVE HELPERS
+   ============================================= */
+@media (max-width: 768px) {
+  .section { padding: 56px 0; }
+  .container { padding: 0 16px; }
+  .hide-mobile { display: none !important; }
+}
+
+@media (min-width: 769px) {
+  .hide-desktop { display: none !important; }
+}
+
+/* =============================================
+   STATUS COLORS
+   ============================================= */
+.status-no-pedido { color: var(--text-light); }
+.status-pedido-dropi { color: var(--gold-dark); }
+.status-en-proceso { color: var(--warning); }
+.status-enviado { color: var(--lavender); }
+.status-entregado { color: var(--success); }
+.status-cancelado { color: var(--error); }
+.status-rechazado { color: var(--error); }
+.status-devuelto { color: var(--text-mid); }

@@ -1,0 +1,127 @@
+.page {
+  min-height: 80vh;
+  padding-bottom: 80px;
+}
+
+.pageHeader {
+  background: linear-gradient(135deg, var(--purple-dark), var(--lavender));
+  padding: 56px 0 48px;
+  margin-bottom: 40px;
+}
+
+.pageTitle {
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+.pageSubtitle {
+  color: rgba(247, 247, 242, 0.8);
+  font-size: 1rem;
+  max-width: 520px;
+}
+
+/* Filters */
+.filtersBar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.searchWrapper {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  pointer-events: none;
+}
+
+.searchInput {
+  padding-left: 44px;
+}
+
+.sortSelect {
+  width: auto;
+  min-width: 180px;
+  cursor: pointer;
+}
+
+/* Category pills */
+.catPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.catPill {
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1.5px solid var(--cream-dark);
+  background: var(--white);
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.catPill:hover {
+  border-color: var(--lavender);
+  color: var(--lavender);
+}
+
+.catPillActive {
+  background: var(--purple-dark);
+  border-color: var(--purple-dark);
+  color: var(--white);
+}
+
+/* Results count */
+.resultsCount {
+  font-size: 0.875rem;
+  color: var(--text-light);
+  margin-bottom: 24px;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}
+
+@media (max-width: 400px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 80px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.empty p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+}
