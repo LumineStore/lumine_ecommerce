@@ -1,10 +1,10 @@
 'use client';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 
-export default function ConfirmacionPage() {
+function ConfirmacionContent() {
   const params = useSearchParams();
   const orderId = params.get('id');
 
@@ -62,5 +62,13 @@ export default function ConfirmacionPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ConfirmacionPage() {
+  return (
+    <Suspense fallback={<div style={{ textAlign: 'center', padding: '100px 20px' }}>Cargando detalles de tu pedido...</div>}>
+      <ConfirmacionContent />
+    </Suspense>
   );
 }
