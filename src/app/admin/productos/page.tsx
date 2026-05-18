@@ -268,7 +268,7 @@ export default function AdminProductosPage() {
                 </div>
                 <div className="form-group">
                   <label className="form-label">Precio Oferta (S/ - Opcional)</label>
-                  <input type="number" step="0.01" className="form-input" value={discountPrice} onChange={(e) => setDiscountPrice(e.target.value)} />
+                  <input type="number" step="0.01" className="form-input" value={discountPrice} onChange={(e) => setDiscountPrice(e.target.value === "" ? "" : Number(e.target.value))} />
                 </div>
               </div>
 
