@@ -117,6 +117,32 @@ export default function AdminProductosPage() {
     setImages(images.filter((_, i) => i !== index));
   }
 
+  function handleSetPrincipal(index: number) {
+    if (index <= 0 || index >= images.length) return;
+    const newImages = [...images];
+    const [selected] = newImages.splice(index, 1);
+    newImages.unshift(selected);
+    setImages(newImages);
+  }
+
+  function handleMoveLeft(index: number) {
+    if (index <= 0) return;
+    const newImages = [...images];
+    const temp = newImages[index];
+    newImages[index] = newImages[index - 1];
+    newImages[index - 1] = temp;
+    setImages(newImages);
+  }
+
+  function handleMoveRight(index: number) {
+    if (index >= images.length - 1) return;
+    const newImages = [...images];
+    const temp = newImages[index];
+    newImages[index] = newImages[index + 1];
+    newImages[index + 1] = temp;
+    setImages(newImages);
+  }
+
   // --- SAVE ---
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
@@ -325,27 +351,137 @@ export default function AdminProductosPage() {
 
                 {/* Galería de imágenes seleccionadas */}
                 {images.length > 0 && (
-                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 10 }}>
-                    {images.map((url, idx) => (
-                      <div key={idx} style={{ position: 'relative', width: 70, height: 70, borderRadius: 6, border: '1px solid var(--cream-dark)', overflow: 'hidden' }}>
-                        <img src={url} alt={`Preview ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveImage(idx)}
-                          style={{
-                            position: 'absolute', top: 2, right: 2,
-                            background: 'rgba(255,0,0,0.8)', color: 'white',
-                            border: 'none', borderRadius: '50%',
-                            width: 20, height: 20, fontSize: '0.7rem',
-                            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 12 }}>
+                    {images.map((url, idx) => {
+                      const isMain = idx === 0;
+                      return (
+                        <div 
+                          key={idx} 
+                          style={{ 
+                            position: 'relative', 
+                            width: 105, 
+                            height: 105, 
+                            borderRadius: 8, 
+                            border: isMain ? '2.5px solid #eab308' : '1px solid var(--cream-dark)', 
+                            boxShadow: isMain ? '0 0 12px rgba(234,179,8,0.25)' : 'var(--shadow-sm)',
+                            overflow: 'hidden',
+                            transition: 'all 0.2s ease',
+                            background: '#fff'
                           }}
                         >
-                          ✕
-                        </button>
-                      </div>
-                    ))}
+                          <img src={url} alt={`Preview ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          
+                          {/* Botón Eliminar (✕) */}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveImage(idx)}
+                            title="Eliminar imagen"
+                            style={{
+                              position: 'absolute', top: 3, right: 3,
+                              background: 'rgba(239, 68, 68, 0.95)', color: 'white',
+                              border: 'none', borderRadius: '50%',
+                              width: 20, height: 20, fontSize: '0.65rem',
+                              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                              zIndex: 10,
+                              fontWeight: 'bold',
+                              transition: 'background 0.2s'
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.background = '#dc2626'}
+                            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.95)'}
+                          >
+                            ✕
+                          </button>
+
+                          {/* Flechas de reordenar */}
+                          <div style={{
+                            position: 'absolute', top: 3, left: 3,
+                            display: 'flex', gap: 2, zIndex: 10
+                          }}>
+                            {idx > 0 && (
+                              <button
+                                type="button"
+                                onClick={() => handleMoveLeft(idx)}
+                                title="Mover izquierda / subir orden"
+                                style={{
+                                  background: 'rgba(30, 41, 59, 0.85)', color: 'white', border: 'none',
+                                  borderRadius: 4, width: 18, height: 18, fontSize: '0.6rem',
+                                  cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  transition: 'background 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(30, 41, 59, 1)'}
+                                onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(30, 41, 59, 0.85)'}
+                              >
+                                ◀
+                              </button>
+                            )}
+                            {idx < images.length - 1 && (
+                              <button
+                                type="button"
+                                onClick={() => handleMoveRight(idx)}
+                                title="Mover derecha / bajar orden"
+                                style={{
+                                  background: 'rgba(30, 41, 59, 0.85)', color: 'white', border: 'none',
+                                  borderRadius: 4, width: 18, height: 18, fontSize: '0.6rem',
+                                  cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  transition: 'background 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(30, 41, 59, 1)'}
+                                onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(30, 41, 59, 0.85)'}
+                              >
+                                ▶
+                              </button>
+                            )}
+                          </div>
+
+                          {/* Indicador o botón de principal */}
+                          {isMain ? (
+                            <div style={{
+                              position: 'absolute', bottom: 0, left: 0, right: 0,
+                              background: '#eab308', color: '#000',
+                              fontSize: '0.62rem', fontWeight: 800, padding: '3px 0',
+                              borderRadius: '0 0 4px 4px', textAlign: 'center', 
+                              boxShadow: '0 -1px 3px rgba(0,0,0,0.1)',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.03em',
+                              zIndex: 5
+                            }}>
+                              ⭐ Destacada
+                            </div>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => handleSetPrincipal(idx)}
+                              title="Hacer imagen destacada / principal"
+                              style={{
+                                position: 'absolute', bottom: 0, left: 0, right: 0,
+                                background: 'rgba(30, 41, 59, 0.85)', color: '#fff',
+                                border: 'none', borderRadius: '0 0 4px 4px',
+                                fontSize: '0.62rem', fontWeight: 600, padding: '3px 0', cursor: 'pointer',
+                                textAlign: 'center', transition: 'all 0.2s',
+                                textTransform: 'uppercase',
+                                zIndex: 5
+                              }}
+                              onMouseEnter={(e) => { 
+                                e.currentTarget.style.background = '#eab308'; 
+                                e.currentTarget.style.color = '#000'; 
+                                e.currentTarget.style.fontWeight = '800';
+                              }}
+                              onMouseLeave={(e) => { 
+                                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.85)'; 
+                                e.currentTarget.style.color = '#fff'; 
+                                e.currentTarget.style.fontWeight = '600';
+                              }}
+                            >
+                              ☆ Destacar
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
+
               </div>
 
               <div className={styles.adminFormRow}>
