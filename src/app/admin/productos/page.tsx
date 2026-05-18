@@ -3,6 +3,52 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Product, Category } from '@/types';
 import styles from '../admin.module.css';
 
+// Helper function to compress and convert image to base64
+function compressAndConvertToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 800;
+        const MAX_HEIGHT = 800;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Could not get canvas 2D context'));
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0, width, height);
+        // Compress as JPEG with 0.75 quality (perfect balance of quality and size)
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+        resolve(dataUrl);
+      };
+      img.onerror = (err) => reject(err);
+    };
+    reader.onerror = (err) => reject(err);
+  });
+}
+
 export default function AdminProductosPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -91,22 +137,13 @@ export default function AdminProductosPage() {
     }
 
     setUploadingImage(true);
-    const formData = new FormData();
-    formData.append('file', file);
 
     try {
-      const res = await fetch('/api/admin/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.success && data.url) {
-        setImages([...images, data.url]);
-      } else {
-        alert('Error al subir imagen: ' + (data.error || 'Desconocido'));
-      }
+      const base64Str = await compressAndConvertToBase64(file);
+      setImages([...images, base64Str]);
     } catch (err) {
-      alert('Error de conexión al subir la imagen');
+      console.error('Error compression:', err);
+      alert('Error al procesar y comprimir la imagen. Intenta con otra.');
     } finally {
       setUploadingImage(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
