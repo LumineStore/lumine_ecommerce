@@ -5,22 +5,22 @@ const STEPS = [
   {
     number: '01',
     title: 'Elige tus productos',
-    description: 'Navega por nuestro catálogo y encuentra lo que buscas. Filtra por categoría o búscalo por nombre.',
+    description: 'Navega por el catálogo, filtra por categoría y añade lo que deseas al carrito de compras.',
   },
   {
     number: '02',
-    title: 'Agrégalos al carrito',
-    description: 'Selecciona la cantidad que deseas y agrega tus productos favoritos al carrito de compras.',
+    title: 'Completa tus datos',
+    description: 'Llena el formulario con tu nombre, teléfono y dirección. Eso es todo de tu parte.',
   },
   {
     number: '03',
-    title: 'Completa tus datos',
-    description: 'Llena el formulario con tu nombre, teléfono y dirección completa. Todo queda registrado de forma segura.',
+    title: 'Te confirmamos',
+    description: 'Un asesor de Luminé se comunicará contigo por WhatsApp para verificar y coordinar tu pedido.',
   },
   {
     number: '04',
-    title: 'Recibe y paga',
-    description: 'Confirmamos tu pedido por WhatsApp antes de procesarlo. Pagas cuando el producto llegue a tu puerta.',
+    title: 'Recibe tu pedido',
+    description: 'El repartidor llegará a tu domicilio. Pagas únicamente al recibir, sin anticipos.',
   },
 ];
 
@@ -66,15 +66,15 @@ export default function HowItWorks() {
         <div className={styles.notes}>
           <div className={styles.note}>
             <div className={styles.noteDot} style={{ background: 'var(--gold)' }} />
-            <p>Pedidos confirmados por WhatsApp antes de ser procesados</p>
+            <p>Lima Metropolitana: envío gratuito · 2 a 3 días hábiles</p>
           </div>
           <div className={styles.note}>
             <div className={styles.noteDot} style={{ background: 'var(--lavender)' }} />
-            <p>Entrega en Lima: aproximadamente 3 días hábiles</p>
+            <p>Provincias: costo de envío variable según destino · 4 a 7 días hábiles</p>
           </div>
           <div className={styles.note}>
             <div className={styles.noteDot} style={{ background: 'var(--sage)' }} />
-            <p>Entrega en provincias: aproximadamente una semana</p>
+            <p>Pagas únicamente al recibir tu pedido, sin anticipos</p>
           </div>
         </div>
       </div>

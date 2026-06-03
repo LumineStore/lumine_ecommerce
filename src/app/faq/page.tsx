@@ -13,7 +13,7 @@ const FAQS = [
   },
   {
     q: '¿El envío tiene algún costo extra?',
-    a: 'No. Todos los precios que ves en nuestro catálogo incluyen el costo de envío a tu domicilio. El precio final que aparece en tu resumen de pedido es lo que pagarás al repartidor.',
+    a: 'El envío a Lima Metropolitana y Callao es completamente gratuito. Para envíos a provincia, el costo varía según tu ubicación y será informado por tu asesor al confirmar el pedido.',
   },
   {
     q: '¿Puedo cancelar mi pedido después de confirmarlo por WhatsApp?',
