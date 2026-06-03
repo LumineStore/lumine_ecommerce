@@ -16,8 +16,8 @@ export default function Footer() {
               Compra fácil, paga cuando recibas tu pedido. Entregamos en todo el Perú.
             </p>
             <div className={styles.badges}>
-              <span className={styles.trustBadge}>Pago contra entrega</span>
-              <span className={styles.trustBadge}>Confirmación por WhatsApp</span>
+              <span className={styles.trustBadge}>Paga al recibir</span>
+              <span className={styles.trustBadge}>Envío gratis en Lima</span>
             </div>
           </div>
 
@@ -27,16 +27,7 @@ export default function Footer() {
             <ul className={styles.linkList}>
               <li><Link href="/">Inicio</Link></li>
               <li><Link href="/catalogo">Catálogo</Link></li>
-              <li><Link href="/como-comprar">Cómo comprar</Link></li>
               <li><Link href="/faq">Preguntas frecuentes</Link></li>
-            </ul>
-          </div>
-
-          {/* Info */}
-          <div>
-            <h4 className={styles.colTitle}>Información</h4>
-            <ul className={styles.linkList}>
-              <li><Link href="/contacto">Contacto</Link></li>
               <li><Link href="/carrito">Mi carrito</Link></li>
             </ul>
           </div>
