@@ -1,19 +1,19 @@
 /* ── Page header ──────────────────────────────── */
 .pageHeader {
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 44px;
 }
 
 .pageTitle {
   color: var(--purple-dark);
   font-size: clamp(1.8rem, 4vw, 2.4rem);
-  margin: 12px 0 16px;
+  margin: 12px 0 14px;
 }
 
 .pageSubtitle {
   color: var(--text-mid);
   font-size: 1.05rem;
-  max-width: 500px;
+  max-width: 480px;
   margin: 0 auto;
   line-height: 1.6;
 }
@@ -22,7 +22,7 @@
 .faqList {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 /* ── FAQ item card ────────────────────────────── */
@@ -31,36 +31,30 @@
   border-radius: var(--radius-lg);
   border: 1.5px solid var(--cream-dark, #e8e4de);
   overflow: hidden;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
-  animation: slideInFade 0.45s ease both;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  animation: slideInFade 0.38s ease both;
   animation-delay: var(--delay, 0ms);
 }
 
 .faqItem:hover {
   border-color: rgba(184, 147, 70, 0.4);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.06);
 }
 
 .faqItemOpen {
-  border-color: rgba(126, 91, 149, 0.35);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.09);
+  border-color: rgba(126, 91, 149, 0.3);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
 }
 
 @keyframes slideInFade {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── Trigger button ───────────────────────────── */
 .faqTrigger {
   width: 100%;
-  padding: 22px 24px;
+  padding: 20px 22px;
   background: none;
   border: none;
   cursor: pointer;
@@ -69,23 +63,19 @@
   align-items: center;
   gap: 16px;
   text-align: left;
-  transition: background 0.2s ease;
+  transition: background 0.15s ease;
 }
 
 .faqTrigger:hover {
-  background: var(--cream, #faf8f5);
-}
-
-.faqItemOpen .faqTrigger {
-  background: none;
+  background: rgba(250, 248, 245, 0.7);
 }
 
 .faqQ {
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   font-weight: 600;
   color: var(--text-dark);
   line-height: 1.4;
-  transition: color 0.2s ease;
+  transition: color 0.18s ease;
 }
 
 .faqItemOpen .faqQ {
@@ -97,7 +87,7 @@
   color: var(--gold);
   display: flex;
   align-items: center;
-  transition: transform 0.35s ease, color 0.2s ease;
+  transition: transform 0.28s ease, color 0.18s ease;
 }
 
 .faqIconOpen {
@@ -109,7 +99,7 @@
 .faqBody {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.38s ease;
+  transition: grid-template-rows 0.3s ease;
 }
 
 .faqBodyOpen {
@@ -121,42 +111,40 @@
 }
 
 .faqAnswer {
-  padding: 0 24px 24px;
+  padding: 0 22px 22px;
   color: var(--text-mid);
   line-height: 1.65;
-  font-size: 0.97rem;
+  font-size: 0.96rem;
 }
 
-.faqAnswer p {
-  margin: 0;
-}
+.faqAnswer p { margin: 0; }
 
 /* ── Steps list inside FAQ ────────────────────── */
 .stepsList {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
 }
 
 .stepsItem {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  padding: 12px 16px;
+  gap: 12px;
+  padding: 11px 14px;
   background: var(--cream, #faf8f5);
   border-radius: 10px;
-  font-size: 0.94rem;
+  font-size: 0.93rem;
   line-height: 1.5;
 }
 
 .stepsNum {
   font-weight: 800;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--white);
   background: var(--purple-dark);
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -169,9 +157,9 @@
   color: var(--text-mid);
 }
 
-/* ── Contact box ──────────────────────────────── */
-.contactBox {
-  margin-top: 56px;
+/* ── Contact section at bottom ────────────────── */
+.contactSection {
+  margin-top: 52px;
   text-align: center;
   padding: 40px 32px;
   background: var(--cream, #faf8f5);
@@ -180,16 +168,74 @@
 }
 
 .contactTitle {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   color: var(--purple-dark);
   margin: 0 0 10px;
 }
 
-.contactText {
+.contactSubtitle {
   color: var(--text-mid);
-  margin: 0 0 24px;
   font-size: 0.97rem;
   max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+
+.contactCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.contactCard {
+  background: var(--white);
+  padding: 28px 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.contactCard:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.contactIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.contactCardTitle {
+  font-size: 1.05rem;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin: 0;
+}
+
+.contactCardText {
+  color: var(--text-mid);
+  font-size: 0.88rem;
+  margin: 0 0 6px;
+}
+
+@media (max-width: 560px) {
+  .contactSection {
+    padding: 32px 16px;
+  }
+  .faqTrigger {
+    padding: 18px 16px;
+  }
+  .faqAnswer {
+    padding: 0 16px 20px;
+  }
 }

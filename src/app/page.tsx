@@ -14,8 +14,12 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [fading, setFading] = useState(false);
+
   const trackRef = useRef<HTMLDivElement>(null);
-  const isScrollingRef = useRef(false);
+  const isFadingRef = useRef(false);
+  const currentSlideRef = useRef(0);
+  const fadeTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     Promise.all([
@@ -33,61 +37,79 @@ export default function HomePage() {
   const featured = products.filter((p) => p.isFeatured && p.isActive).slice(0, 6);
 
   useEffect(() => {
+    currentSlideRef.current = currentSlide;
+  }, [currentSlide]);
+
+  useEffect(() => {
     setCurrentSlide(0);
   }, [featured.length]);
 
-  // Scroll track when currentSlide changes
+  // Smooth scroll to slide (only when not in a fade transition)
   useEffect(() => {
+    if (isFadingRef.current) return;
     const track = trackRef.current;
     if (!track || featured.length === 0) return;
     const slide = track.children[currentSlide] as HTMLElement;
-    if (!slide) return;
-    isScrollingRef.current = true;
-    track.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' });
-    const t = setTimeout(() => { isScrollingRef.current = false; }, 600);
-    return () => clearTimeout(t);
+    if (slide) track.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' });
   }, [currentSlide, featured.length]);
 
-  // Compute max meaningful scroll index based on visible items
   const getMaxSlide = () => {
     const track = trackRef.current;
     if (!track || featured.length === 0) return 0;
-    const firstSlide = track.children[0] as HTMLElement;
-    if (!firstSlide) return featured.length - 1;
-    const visibleCount = Math.max(1, Math.round(track.clientWidth / firstSlide.offsetWidth));
-    return Math.max(0, featured.length - visibleCount);
+    const first = track.children[0] as HTMLElement;
+    if (!first || first.offsetWidth === 0) return featured.length - 1;
+    const visible = Math.max(1, Math.round(track.clientWidth / first.offsetWidth));
+    return Math.max(0, featured.length - visible);
+  };
+
+  // Fade + instant jump for boundary crossing (infinite feel)
+  const wrapTo = (target: number) => {
+    isFadingRef.current = true;
+    setFading(true);
+    clearTimeout(fadeTimerRef.current);
+    fadeTimerRef.current = setTimeout(() => {
+      const track = trackRef.current;
+      const slide = track?.children[target] as HTMLElement;
+      if (track && slide) track.scrollTo({ left: slide.offsetLeft });
+      setCurrentSlide(target);
+      setFading(false);
+      setTimeout(() => { isFadingRef.current = false; }, 50);
+    }, 170);
+  };
+
+  const next = () => {
+    const max = getMaxSlide();
+    if (currentSlide >= max) wrapTo(0);
+    else setCurrentSlide((p) => Math.min(p + 1, max));
+  };
+
+  const prev = () => {
+    const max = getMaxSlide();
+    if (currentSlide <= 0) wrapTo(max);
+    else setCurrentSlide((p) => Math.max(p - 1, 0));
+  };
+
+  const goTo = (i: number) => {
+    const max = getMaxSlide();
+    setCurrentSlide(Math.max(0, Math.min(i, max)));
   };
 
   // Auto-play
   useEffect(() => {
     if (isHovered || featured.length === 0) return;
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => {
-        const max = getMaxSlide();
-        return prev >= max ? 0 : prev + 1;
-      });
+      const max = getMaxSlide();
+      if (max === 0) return;
+      const curr = currentSlideRef.current;
+      if (curr >= max) wrapTo(0);
+      else setCurrentSlide((p) => p + 1);
     }, 3500);
     return () => clearInterval(timer);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isHovered, featured.length]);
 
-  const goTo = (i: number) => {
-    const max = getMaxSlide();
-    setCurrentSlide(Math.max(0, Math.min(i, max)));
-  };
-  const next = () => {
-    const max = getMaxSlide();
-    setCurrentSlide((prev) => (prev >= max ? 0 : prev + 1));
-  };
-  const prev = () => {
-    const max = getMaxSlide();
-    setCurrentSlide((prev) => (prev <= 0 ? max : prev - 1));
-  };
-
   const touchStartX = useRef(0);
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
+  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
   const handleTouchEnd = (e: React.TouchEvent) => {
     const diff = touchStartX.current - e.changedTouches[0].clientX;
     if (diff > 40) next();
@@ -98,14 +120,10 @@ export default function HomePage() {
     <>
       <Hero />
 
-      {/* Featured Products */}
       <ScrollReveal animation="fade-up" delay={100}>
         <section className={`section ${styles.featured}`}>
           <div className="container">
             <div className={`text-center ${styles.featuredHeader}`}>
-              <span className="badge badge-gold" style={{ marginBottom: '12px' }}>
-                Selección destacada
-              </span>
               <h2 className={styles.featuredTitle}>Productos destacados</h2>
               <p className={styles.featuredSub}>
                 Descubre nuestros productos más populares y mejor valorados.
@@ -120,7 +138,10 @@ export default function HomePage() {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <div className={styles.carouselOuter}>
+                <div
+                  className={styles.carouselOuter}
+                  style={{ opacity: fading ? 0 : 1, transition: 'opacity 0.17s ease' }}
+                >
                   <button className={styles.arrow} onClick={prev} aria-label="Anterior">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="15 18 9 12 15 6" />
