@@ -24,23 +24,23 @@ export default function ComoComprarPage() {
             <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'var(--lavender)', color: 'var(--white)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 'bold', flexShrink: 0 }}>2</div>
             <div>
               <h2 style={{ fontSize: '1.2rem', color: 'var(--text-dark)', marginBottom: 8 }}>Completa tus datos</h2>
-              <p style={{ color: 'var(--text-mid)', lineHeight: 1.6 }}>Ve al carrito y presiona "Comprar contra entrega". Llena el formulario con tus datos reales y la dirección exacta donde deseas recibir el producto.</p>
+              <p style={{ color: 'var(--text-mid)', lineHeight: 1.6 }}>Llena el formulario con tu nombre, teléfono y dirección exacta. Eso es todo de tu parte.</p>
             </div>
           </div>
 
           <div style={{ display: 'flex', gap: 20 }}>
             <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'var(--lavender)', color: 'var(--white)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 'bold', flexShrink: 0 }}>3</div>
             <div>
-              <h2 style={{ fontSize: '1.2rem', color: 'var(--text-dark)', marginBottom: 8 }}>Confirmación por WhatsApp</h2>
-              <p style={{ color: 'var(--text-mid)', lineHeight: 1.6 }}>Una vez enviado tu pedido, serás redirigido a WhatsApp para enviarnos tu confirmación. Un asesor verificará tus datos para asegurar la entrega.</p>
+              <h2 style={{ fontSize: '1.2rem', color: 'var(--text-dark)', marginBottom: 8 }}>Un asesor te confirma</h2>
+              <p style={{ color: 'var(--text-mid)', lineHeight: 1.6 }}>Un asesor de Luminé revisará tu pedido y te escribirá por WhatsApp para confirmar tus datos y coordinar la entrega.</p>
             </div>
           </div>
 
           <div style={{ display: 'flex', gap: 20 }}>
             <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'var(--gold)', color: 'var(--white)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 'bold', flexShrink: 0 }}>4</div>
             <div>
-              <h2 style={{ fontSize: '1.2rem', color: 'var(--text-dark)', marginBottom: 8 }}>Recibe y Paga</h2>
-              <p style={{ color: 'var(--text-mid)', lineHeight: 1.6 }}>¡Listo! El repartidor llegará a tu domicilio en los días indicados. Revisa que tu producto esté correcto y realiza el pago en ese momento (efectivo o Yape/Plin según disponibilidad del courrier).</p>
+              <h2 style={{ fontSize: '1.2rem', color: 'var(--text-dark)', marginBottom: 8 }}>Recibe tu pedido</h2>
+              <p style={{ color: 'var(--text-mid)', lineHeight: 1.6 }}>El repartidor llegará a tu domicilio en los días indicados. Revisa tu producto y paga al recibirlo, sin anticipos.</p>
             </div>
           </div>
         </div>

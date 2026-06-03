@@ -1,70 +1,195 @@
+/* ── Page header ──────────────────────────────── */
+.pageHeader {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.pageTitle {
+  color: var(--purple-dark);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  margin: 12px 0 16px;
+}
+
+.pageSubtitle {
+  color: var(--text-mid);
+  font-size: 1.05rem;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── FAQ list ─────────────────────────────────── */
 .faqList {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
+/* ── FAQ item card ────────────────────────────── */
 .faqItem {
   background: var(--white);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--cream-dark, #e8e4de);
   overflow: hidden;
-  transition: var(--transition);
-  border: 1px solid transparent;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  animation: slideInFade 0.45s ease both;
+  animation-delay: var(--delay, 0ms);
 }
+
 .faqItem:hover {
-  box-shadow: var(--shadow-md);
-  border-color: rgba(184, 147, 70, 0.2);
+  border-color: rgba(184, 147, 70, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
 }
 
-.faqSummary {
-  padding: 24px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  cursor: pointer;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
-  transition: var(--transition);
-}
-.faqSummary::-webkit-details-marker {
-  display: none;
+.faqItemOpen {
+  border-color: rgba(126, 91, 149, 0.35);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.09);
 }
 
-.faqSummary::after {
-  content: '+';
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: var(--gold);
-  transition: transform 0.3s ease;
-}
-
-.faqItem[open] .faqSummary::after {
-  transform: rotate(45deg);
-}
-
-.faqItem[open] .faqSummary {
-  color: var(--purple-dark);
-  padding-bottom: 12px;
-}
-
-.faqAnswer {
-  padding: 0 24px 24px;
-  color: var(--text-mid);
-  line-height: 1.6;
-  animation: fadeInDown 0.3s ease-out;
-}
-
-@keyframes fadeInDown {
+@keyframes slideInFade {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ── Trigger button ───────────────────────────── */
+.faqTrigger {
+  width: 100%;
+  padding: 22px 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.faqTrigger:hover {
+  background: var(--cream, #faf8f5);
+}
+
+.faqItemOpen .faqTrigger {
+  background: none;
+}
+
+.faqQ {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.faqItemOpen .faqQ {
+  color: var(--purple-dark);
+}
+
+.faqIcon {
+  flex-shrink: 0;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  transition: transform 0.35s ease, color 0.2s ease;
+}
+
+.faqIconOpen {
+  transform: rotate(180deg);
+  color: var(--purple-dark);
+}
+
+/* ── Accordion body — grid trick for smooth height */
+.faqBody {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.38s ease;
+}
+
+.faqBodyOpen {
+  grid-template-rows: 1fr;
+}
+
+.faqInner {
+  overflow: hidden;
+}
+
+.faqAnswer {
+  padding: 0 24px 24px;
+  color: var(--text-mid);
+  line-height: 1.65;
+  font-size: 0.97rem;
+}
+
+.faqAnswer p {
+  margin: 0;
+}
+
+/* ── Steps list inside FAQ ────────────────────── */
+.stepsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stepsItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 16px;
+  background: var(--cream, #faf8f5);
+  border-radius: 10px;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.stepsNum {
+  font-weight: 800;
+  font-size: 0.72rem;
+  color: var(--white);
+  background: var(--purple-dark);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  letter-spacing: 0.02em;
+}
+
+.stepsDesc {
+  color: var(--text-mid);
+}
+
+/* ── Contact box ──────────────────────────────── */
+.contactBox {
+  margin-top: 56px;
+  text-align: center;
+  padding: 40px 32px;
+  background: var(--cream, #faf8f5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--cream-dark, #e8e4de);
+}
+
+.contactTitle {
+  font-size: 1.25rem;
+  color: var(--purple-dark);
+  margin: 0 0 10px;
+}
+
+.contactText {
+  color: var(--text-mid);
+  margin: 0 0 24px;
+  font-size: 0.97rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }

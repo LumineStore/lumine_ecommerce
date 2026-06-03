@@ -28,86 +28,72 @@
   margin: 14px auto 0;
 }
 
-/* ── Desktop grid ─────────────────────────────── */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.gridItem {
-  animation: fadeSlideUp 0.5s ease both;
-  animation-delay: var(--delay, 0ms);
-}
-
-@keyframes fadeSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(22px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ── Mobile / tablet carousel (hidden on desktop) */
+/* ── Carousel (all screen sizes) ─────────────── */
 .carouselSection {
-  display: none;
+  width: 100%;
 }
 
-@media (max-width: 900px) {
-  .grid { display: none; }
-  .carouselSection { display: block; }
-}
-
-.carouselInner {
+.carouselOuter {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.carouselWrapper {
-  flex: 1;
-  overflow: hidden;
-  border-radius: var(--radius-lg, 16px);
+  gap: 12px;
 }
 
 .carouselTrack {
+  flex: 1;
   display: flex;
-  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  will-change: transform;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  gap: 24px;
 }
 
+.carouselTrack::-webkit-scrollbar {
+  display: none;
+}
+
+/* 3 per row on desktop */
 .slide {
-  flex: 0 0 100%;
-  min-width: 0;
+  flex: 0 0 calc(33.333% - 16px);
+  scroll-snap-align: start;
+  transition: transform 0.2s ease;
+}
+
+@media (max-width: 900px) {
+  .slide { flex: 0 0 calc(50% - 12px); }
+  .carouselOuter { gap: 8px; }
+}
+
+@media (max-width: 560px) {
+  .slide { flex: 0 0 100%; }
 }
 
 /* Arrow buttons */
 .arrow {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: none;
+  border: 1.5px solid var(--cream-dark, #e0dbd4);
   background: white;
   color: var(--purple-dark);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
 .arrow:hover {
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border-color: var(--purple-dark);
   transform: scale(1.08);
 }
 
 .arrow:active {
-  transform: scale(0.95);
+  transform: scale(0.94);
 }
 
 /* Dot indicators */
@@ -115,7 +101,7 @@
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .dot {
@@ -126,13 +112,12 @@
   padding: 0;
   background: var(--cream-dark, #ddd);
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease, width 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease, width 0.3s ease, border-radius 0.3s ease;
 }
 
 .dotActive {
   background: var(--purple-dark);
-  transform: scale(1.25);
-  width: 22px;
+  width: 24px;
   border-radius: 4px;
 }
 

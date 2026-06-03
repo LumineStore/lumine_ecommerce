@@ -23,7 +23,7 @@ export default function Hero() {
         <div className={styles.textBlock}>
           {/* Trust pill */}
           <div className={styles.pill}>
-            Skin Care Profesional — Pago Contra Entrega
+            Skin Care Profesional — Paga al Recibir
           </div>
 
           <h1 className={styles.title}>
@@ -52,7 +52,7 @@ export default function Hero() {
             <Link href="/catalogo" className="btn btn-primary btn-lg" id="hero-catalog-btn">
               Ver catálogo
             </Link>
-            <Link href="/como-comprar" className="btn btn-ghost btn-lg" id="hero-how-btn">
+            <Link href="/faq" className="btn btn-ghost btn-lg" id="hero-how-btn">
               ¿Cómo funciona?
             </Link>
           </div>
