@@ -8,9 +8,7 @@ import styles from './Header.module.css';
 const NAV_LINKS = [
   { href: '/', label: 'Inicio' },
   { href: '/catalogo', label: 'Catálogo' },
-  { href: '/como-comprar', label: 'Cómo comprar' },
   { href: '/faq', label: 'Preguntas frecuentes' },
-  { href: '/contacto', label: 'Contacto' },
 ];
 
 export default function Header() {
